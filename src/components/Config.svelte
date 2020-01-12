@@ -1,13 +1,11 @@
 <script>
-// imports
+    import { problems, difficulty } from '../stores.js';
+	import { randomSelect, randomNumberBetween } from '../helpers.js';
     import App from './App.svelte';
-    import { createEventDispatcher } from 'svelte';
-
-    const dispatch = createEventDispatcher();
 
     let maxProblems = 10;
     let operator = 'all';
-    let localDifficulty = '10';
+    let _difficulty = '10';
 
     let generateProblems = () => {
         let arr = [];
@@ -29,23 +27,22 @@
         for(let i = 0; i < maxProblems; i++)
         {
             let id = i+1;
-            let l = Math.abs(Math.floor(Math.random() * parseInt(localDifficulty, 10)));
+            let l = Math.abs(Math.floor(Math.random() * parseInt(_difficulty, 10)));
             let r = Math.abs(Math.floor(Math.random() * l) - 1);
-            let op = operators[Math.floor(Math.random() * operators.length)]
-            let a = Math.round(eval(`${l}${op}${r}`) * 100) / 100;
+            let op = randomSelect(operators);
+            let a = eval(`${l}${op}${r}`);
             a = a === Infinity ? 0 : a;
+            if (a % 1 !== 0) a = eval(a.toFixed(2));
             arr.push({id, op, l, r, a});
         }
-        dispatch('updateConfig', {
-            problems: arr,
-            difficulty: localDifficulty
-        });
+        problems.set(arr);
+        difficulty.set(_difficulty);
     }
 </script>
 
 <div>
     <label>Difficulty</label>
-    <select bind:value={localDifficulty}>
+    <select bind:value={_difficulty}>
         <option value="10">1</option>
         <option value="100">2</option>
         <option value="1000">3</option>

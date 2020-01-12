@@ -1,5 +1,5 @@
 <script>
-    export let problems;
+    import { problems } from '../stores.js';
     export let input; 
 
     let getAnswer = (id) => {
@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            {#each problems as problem}
+            {#each $problems as problem}
             <tr class={problem.a !== getAnswer(problem.id) ? 'incorrect' : ''}>
                 <td>{problem.id}</td>
                 <td>{problem.l} {problem.op} {problem.r}</td>
