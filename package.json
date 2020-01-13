@@ -16,7 +16,6 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "fractions": "^1.0.2",
     "sirv-cli": "^0.4.4"
   }
 }

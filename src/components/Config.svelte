@@ -8,6 +8,12 @@
     let _difficulty = '10';
 
     let generateProblems = () => {
+        if (maxProblems <= 0) 
+        {
+            alert('Please set at least 1 problem to generate!');
+            return false;
+        }
+
         let arr = [];
         let operators;
 
@@ -57,3 +63,19 @@
     <input type="number" name="maxProblems" bind:value={maxProblems} />
 </div>
 <button on:click={generateProblems} disabled={!maxProblems}>Start</button>
+
+<style>
+    input, button, select {
+        width: 100%;
+        text-align: center;
+    }
+    select {
+        text-align-last: center;
+    }
+    button {
+        transition: all .25s ease-in-out;
+    }
+    button:hover {
+        background: lightgray;
+    }
+</style>
